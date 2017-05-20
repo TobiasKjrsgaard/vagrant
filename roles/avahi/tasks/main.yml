@@ -7,7 +7,7 @@
   with_items: "{{ avahi_packages }}"
   notify: restart avahi-daemon
 
-- name: Install avahi-alias service
+- name: Install the avahi-alias python script
   copy:
     src: avahi-alias
     dest: /usr/sbin/avahi-alias
@@ -15,13 +15,19 @@
     group: root
     mode: 0755
 
-- name: Register avahi-alias service
+- name: Register the avahi-alias service
   copy:
-    src: avahi-alias.upstart
-    dest: /etc/init/avahi-alias.conf
+    src: avahi-alias.service
+    dest: /usr/lib/systemd/system/
     owner: root
     group: root
     mode: 0644
+
+- name: Enable the avahi-alias service
+  systemd:
+    name: avahi-alias.service
+    daemon_reload: yes
+    enabled: yes
 
 - name: Create avahi-alias config directory
   file:
