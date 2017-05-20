@@ -1,2 +1,0 @@
-# Enable to ensure all packages are kept up to date
-common_apt_upgrade: true

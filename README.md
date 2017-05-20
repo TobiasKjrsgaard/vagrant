@@ -21,8 +21,6 @@ init_locales:
   - 'en_US.UTF-8'
   - 'da_DK.UTF-8'
 
-# Enable to ensure all packages are kept up to date
-common_apt_upgrade: true
 ```
 
 ## Future work
