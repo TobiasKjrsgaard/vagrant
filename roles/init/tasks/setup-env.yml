@@ -1,4 +1,11 @@
 ---
+# TODO: Fix the `could not resolve hostname Vagrant.local` issue with `sudo`
+# in Ubuntu 16.04, perhaps by using `lineinfile` to edit `/etc/hosts`.
+#
+# As a temporary fix, the hostname can be handled by Vagrant.
+#
+# See: https://askubuntu.com/questions/59458/error-message-when-i-run-sudo-unable-to-resolve-host-none#59517
+#
 - name: Set machine hostname
   hostname: name="{{ hostname }}"
   when: hostname is defined

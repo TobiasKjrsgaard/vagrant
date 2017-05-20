@@ -18,8 +18,9 @@ mailhog_enabled: true
 # Uncomment to disable dangerous wp-cli commands
 # wp_disable_db_commands: true
 
-# Define machine hostname
-hostname: vagrant.local
+# The machine hostname will be managed by Vagrant
+# Uncomment the following line to override it using Ansible
+# hostname: vagrant.local
 
 # Password for root user on MySQL database server
 # The `mysql_root_password` var is set in a global host_vars file

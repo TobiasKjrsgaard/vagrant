@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
   # Set the hostname the machine should have. Defaults to nil. If nil,
   # Vagrant won't manage the hostname. If set to a string, the hostname
   # will be set on boot.
-  # config.vm.hostname = "vagrant.local"
+  config.vm.hostname = "vagrant.local"
 
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
