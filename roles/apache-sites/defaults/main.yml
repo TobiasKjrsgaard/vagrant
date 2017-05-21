@@ -1,8 +1,0 @@
-# Define machine variables
-www_root: /var/www
-www_user: vagrant
-www_group: www-data
-
-# Define virtual hosts for Apache
-virtualhost_sites:
-  - host: "{{ hostname }}.local | default(vagrant.local)"
