@@ -1,0 +1,20 @@
+---
+- name: start avahi-daemon
+  service:
+    name: avahi-daemon
+    state: started
+
+- name: restart avahi-daemon
+  service:
+    name: avahi-daemon
+    state: restarted
+
+- name: start avahi-alias
+  service:
+    name: avahi-alias
+    state: started
+
+- name: restart avahi-alias
+  service:
+    name: avahi-alias
+    state: restarted

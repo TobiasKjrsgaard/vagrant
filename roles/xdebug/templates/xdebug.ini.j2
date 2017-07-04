@@ -1,0 +1,13 @@
+; {{ ansible_managed }}
+
+[XDebug]
+zend_extension=xdebug.so
+; Required for remote debugging conncections
+xdebug.remote_enable=1
+xdebug.remote_host=127.0.0.1
+xdebug.remote_port=9000
+xdebug.remote_mode=req
+; Enable automatic "connect back" to ALL remote clients
+; Please note that this is NOT SAFE for production servers!
+xdebug.remote_autostart=1
+xdebug.remote_connect_back=1

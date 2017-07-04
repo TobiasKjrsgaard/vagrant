@@ -1,0 +1,5 @@
+- name: restart mariadb
+  service: name=mysql state=restarted
+
+- name: reload mariadb
+  service: name=mysql state=reloaded

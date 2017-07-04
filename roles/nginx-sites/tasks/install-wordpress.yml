@@ -1,0 +1,41 @@
+---
+- name: Ensure WP-CLI binary is installed
+  get_url: url={{ wp_cli_url }} dest={{ bin_path }} mode=0755
+
+- name: Ensure WP-CLI bash completions are installed
+  get_url: url={{ wp_comp_url }} dest={{ comp_path }}
+
+- name: Configure WP-CLI for each site
+  template:
+    src: wp-cli.yml.j2
+    dest: "{{ www_root }}/{{ item.value.host }}/wp-cli.yml"
+    owner: "{{ www_user }}"
+    group: "{{ www_user }}"
+  with_dict: "{{ sites }}"
+  when: item.value.wordpress is defined and item.value.wordpress.install | default(false)
+
+- name: Download WordPress core files
+  command: wp core download
+  become_user: "{{ www_user }}"
+  args:
+    chdir: "{{ www_root }}/{{ item.value.host }}/html"
+    creates: index.php
+  with_dict: "{{ sites }}"
+  when: item.value.wordpress is defined and item.value.wordpress.install | default(false)
+
+- name: Create WordPress configuration files
+  command: wp core config
+  become_user: "{{ www_user }}"
+  args:
+    chdir: "{{ www_root }}/{{ item.value.host }}/html"
+    creates: wp-config.php
+  with_dict: "{{ sites }}"
+  when: item.value.wordpress is defined and item.value.wordpress.install | default(false)
+
+- name: Make WordPress files group-writable
+  file:
+    path: "{{ www_root }}/{{ item.value.host }}/html"
+    recurse: yes
+    mode: g+w
+  with_dict: "{{ sites }}"
+  when: item.value.wordpress is defined and item.value.wordpress.install | default(false)

@@ -1,0 +1,43 @@
+---
+- name: Install ack-grep package
+  apt: name=ack-grep state=present
+
+- name: Install hhighlighter script
+  get_url: url={{ h_url }} dest={{ h_path }} mode=0755
+
+- name: Import hhighlighter script
+  lineinfile:
+    dest: /etc/bash.bashrc
+    line: "{{ item.line }}"
+    regexp: "{{ item.regexp }}"
+  with_items:
+    - line: "# Import h() function for highlighter script"
+      regexp: "^# Import h.*"
+    - line: "source {{ h_path }}"
+      regexp: "^source {{ h_path }}"
+
+- name: Add ack alias
+  lineinfile:
+    dest: /etc/bash.bashrc
+    line: "{{ item.line }}"
+    regexp: "{{ item.regexp }}"
+  with_items:
+    - line: "# Alias `ack` to `ack-grep` for h() compatibility"
+      regexp: "^# Alias `ack`"
+    - line: "alias ack='ack-grep'"
+      regexp: "^alias ack"
+
+- name: Add log aliases
+  lineinfile:
+    dest: /etc/bash.bashrc
+    line: "{{ item.line }}"
+    regexp: "{{ item.regexp }}"
+  with_items:
+    - line: "# Functions for logfile monitoring"
+      regexp: "# Functions for logfile monitoring"
+    - line: function logphp() { tailf -100 /var/www/$1/log/php.log | h "PHP Parse error|PHP Warning|error" "success" "PHP Strict Standards|PHP Notice" ; }
+      regexp: ^function logphp
+    - line: function logerr() { tailf -100 /var/www/$1/log/error.log | h "\[error\]|\[alert\]" "success" "\[notice\]|\[warn\]" ; }
+      regexp: ^function logerr
+    - line: function logacc() { tailf -100 /var/www/$1/log/access.log | h " 404 | 403 | 500 " " 200 " "GET|POST" ; }
+      regexp: ^function logacc

@@ -1,0 +1,9 @@
+---
+- name: Apache, PHP & MariaDB
+  hosts: lamp
+  roles:
+    - mariadb
+    - php-apache
+    - composer
+    - apache
+    - apache-sites

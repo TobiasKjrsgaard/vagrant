@@ -1,0 +1,28 @@
+# Uncomment to disable the default site
+#
+# This will ensure that a catch-all site and
+# PHP-FPM pool will not be created.
+#
+disable_default_site: true
+disable_default_pool: true
+
+# List of virtual web hosts to be created
+#
+# The sites are listed in a YAML dictionary object
+# in the format shown below. Add as many as you want.
+#
+sites:
+ sample:
+   name: Example Development Site
+   host: vagrant.local
+   ssl:
+     enabled: true
+   database:
+     name: example_db
+     user: example_db_user
+     password: example_db_password
+   wordpress:
+     install: true
+   production:
+     host: example.com
+     try_assets: true

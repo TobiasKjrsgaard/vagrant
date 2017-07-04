@@ -1,0 +1,19 @@
+- name: Configure use of sendfile()
+  replace:
+    dest: /etc/nginx/nginx.conf
+    regexp: ^(\s*)(sendfile)(\s*)(on|off);
+    replace: \1\2\3{{ (nginx_disable_sendfile | default(false) ) | ternary('off','on') }};
+  notify: reload nginx
+
+- name: Create default server configuration
+  template: src=site-default.j2 dest=/etc/nginx/sites-available/default
+
+- name: Create disabled server configuration
+  template: src=site-disabled.j2 dest=/etc/nginx/sites-available/disabled
+
+- name: Link default server configuration
+  file:
+    src: "/etc/nginx/sites-available/{{ (not disable_default_site|default(false)) | ternary('default','disabled') }}"
+    dest: "/etc/nginx/sites-enabled/default"
+    state: link
+  notify: reload nginx

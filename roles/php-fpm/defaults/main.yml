@@ -1,0 +1,10 @@
+# Specify the maximum size of file uploads and request bodies
+max_file_upload_size: 10M
+
+# PHP error reporting and logging settings for a standard production environment
+php_error_reporting: 'E_ALL & ~E_DEPRECATED & ~E_STRICT'
+php_display_errors: 'Off'
+php_log_errors: 'On'
+
+# Disable the default `www.conf` FPM pool
+disable_default_pool: false

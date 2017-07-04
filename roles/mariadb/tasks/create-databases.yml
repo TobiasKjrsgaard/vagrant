@@ -1,0 +1,10 @@
+---
+- name: Make sure the MySQL databases are present
+  mysql_db:
+    name: "{{ item.name }}"
+    collation: "{{ item.collation | default('utf8_general_ci') }}"
+    encoding: "{{ item.encoding | default('utf8') }}"
+    state: present
+    login_user: "{{ mysql_root_user | default('root') }}"
+    login_password: "{{ mysql_root_password | default('pass') }}"
+  with_items: "{{ mysql_databases }}"

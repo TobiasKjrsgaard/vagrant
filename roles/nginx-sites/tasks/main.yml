@@ -1,0 +1,8 @@
+---
+- include: create-directories.yml
+- include: create-certs.yml
+- include: create-databases.yml
+- include: config-avahi.yml
+- include: config-nginx.yml
+- include: config-php.yml
+- include: install-wordpress.yml

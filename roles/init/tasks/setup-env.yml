@@ -1,0 +1,32 @@
+---
+- name: Set machine hostname
+  hostname: name="{{ hostname }}"
+  when: hostname is defined
+
+- name: Set /etc/localtime
+  file:
+    src: /usr/share/zoneinfo/{{ init_timezone }}
+    dest: /etc/localtime
+    state: link
+    force: true
+  when: ansible_os_family == "Debian"
+
+- name: Set /etc/timezone
+  copy:
+    content: "{{ init_timezone }}\n"
+    dest: /etc/timezone
+    owner: root
+    group: root
+    mode: 0644
+  notify: Update timezone
+  when: ansible_os_family == "Debian"
+
+- name: Ensure locales are present
+  locale_gen:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ init_locales }}"
+  when: ansible_os_family == "Debian"
+
+- name: Ensure ntp service is installed
+  apt: name=ntp state=latest

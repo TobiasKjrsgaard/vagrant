@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+
+path: html/
+
+{% if wp_disable_db_commands | default(false) %}
+disabled_commands:
+  - db drop
+  - db reset
+{% endif %}
+
+core config:
+  dbuser: {{ item.value.database.user | default("vagrant") }}
+  dbpass: {{ item.value.database.password | default("vagrant") }}
+  dbname: {{ item.value.database.name }}
+{% if item.value.database.prefix is defined %}
+  dbprefix: {{ item.value.database.prefix }}
+{% endif %}

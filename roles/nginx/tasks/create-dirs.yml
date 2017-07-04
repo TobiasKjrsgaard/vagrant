@@ -1,0 +1,34 @@
+- name: Create default html directory
+  file:
+    path: "{{ www_root }}/html"
+    state: directory
+    owner: "{{ www_user }}"
+    group: "{{ www_group }}"
+    mode: u=rwx,g=rwxs,o=rx
+  when: not disable_default_site|default(false)
+
+- name: Create default log directory
+  file:
+    path: "{{ www_root }}/log"
+    state: directory
+    owner: "{{ www_user }}"
+    group: "{{ www_group }}"
+    mode: 0755
+  when: not disable_default_site|default(false)
+
+- name: Link PHP-FPM error log
+  file:
+    src:  '/var/log/php7.0-fpm.log'
+    dest: '{{ www_root }}/log/php.log'
+    state: link
+    force: yes
+  when: not disable_default_site|default(false)
+
+- name: Remove default server files
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ www_root }}/html"
+    - "{{ www_root }}/log"
+  when: disable_default_site|default(false)

@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+
+##
+# Virtual Host configuration for disabling default server
+#
+server {
+	# Set host as default server on port 80
+	listen 80 default_server;
+
+	# Use the catch all server name
+	server_name _;
+
+	# Send HTTP status code to close connection
+	return 444;
+}

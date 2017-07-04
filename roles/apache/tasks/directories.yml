@@ -1,0 +1,6 @@
+---
+- name: Check html directory
+  file: path={{ www_root }}/html state=directory
+
+- name: Check log directory
+  file: path={{ www_root }}/log state=directory

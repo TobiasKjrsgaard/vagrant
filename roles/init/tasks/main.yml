@@ -1,0 +1,4 @@
+---
+- include: setup-env.yml
+- include: setup-users.yml
+  when: init_users is defined

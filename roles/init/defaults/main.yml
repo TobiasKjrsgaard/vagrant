@@ -1,0 +1,9 @@
+# System wide settings for timezone, locale, etc.
+init_timezone: 'UTC'
+init_locales:
+  - 'en_US.UTF-8'
+
+# List of users to be created
+# init_users:
+#   - name: deploy
+#     groups: adm,sudo

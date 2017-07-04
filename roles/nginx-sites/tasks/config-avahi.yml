@@ -1,0 +1,9 @@
+---
+- name: Configure avahi aliases for sites
+  template:
+    src: avahi-alias.j2
+    dest: /etc/avahi/alias.d/sites
+    owner: root
+    group: root
+  notify: restart avahi-alias
+  when: avahi_enabled | default(false)

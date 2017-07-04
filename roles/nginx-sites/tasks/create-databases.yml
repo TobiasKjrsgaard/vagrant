@@ -1,0 +1,25 @@
+---
+- name: Make sure the MySQL databases are present
+  mysql_db:
+    name: "{{ item.value.database.name }}"
+    collation: "{{ item.value.database.collation | default('utf8_general_ci') }}"
+    encoding: "{{ item.value.database.encoding | default('utf8') }}"
+    state: present
+    login_user: "{{ mysql_root_user | default('root') }}"
+    login_password: "{{ mysql_root_password | default('pass') }}"
+  with_dict: "{{ sites }}"
+  when: item.value.database.name is defined
+
+- name: Make sure the MySQL users are present
+  mysql_user:
+    name: "{{ item.value.database.user }}"
+    password: "{{ item.value.database.password }}"
+    priv: "{{ item.value.database.name }}.*:ALL"
+    login_user: "{{ mysql_root_user | default('root') }}"
+    login_password: "{{ mysql_root_password | default('pass') }}"
+    append_privs: yes
+  with_dict: "{{ sites }}"
+  when: >
+    item.value.database.name is defined and
+    item.value.database.user is defined and
+    item.value.database.password is defined

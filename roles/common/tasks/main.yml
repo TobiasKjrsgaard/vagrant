@@ -1,0 +1,19 @@
+---
+- name: Make sure all packages are up to date
+  apt: update_cache=yes upgrade=yes
+  when: common_apt_upgrade | default(true)
+
+- name: Make sure essential packages are installed
+  apt: name={{ item }} state=latest
+  with_items:
+  - build-essential
+  - python-software-properties
+  - python-mysqldb
+  - python-pycurl
+  - git
+  - curl
+  - rsync
+  - ruby
+
+- name: Make sure rmate binary is present
+  gem: name=rmate state=latest user_install=no

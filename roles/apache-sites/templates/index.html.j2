@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ item.host }}</title>
+  </head>
+  <body>
+    <h1>It works!</h1>
+    <p>
+      The virtual host site <a href="http://{{ item.host }}">http://{{ item.host }}/</a> is located in <code>{{ www_root }}/{{ item.host }}/html/</code>.<br>
+      Deploy to this server via SSH with username <code>{{ www_user }}</code> using your host machine private key.
+    </p>
+  </body>
+</html>

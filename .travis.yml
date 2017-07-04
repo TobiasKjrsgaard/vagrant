@@ -1,0 +1,12 @@
+sudo: false
+language: python
+python: 2.7
+
+cache: pip
+
+install:
+  - pip install ansible
+
+script:
+  - ansible-galaxy install --force -r requirements.yml -p roles
+  - ansible-playbook --syntax-check playbook.yml

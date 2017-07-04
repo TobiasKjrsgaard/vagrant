@@ -1,0 +1,44 @@
+---
+- name: Create html directories
+  file:
+    path: "{{ www_root }}/{{ item.value.host }}/html"
+    owner: "{{ www_user }}"
+    group: "{{ www_group }}"
+    state: directory
+    mode: u=rwx,g=rwxs,o=rx
+  with_dict: "{{ sites }}"
+
+- name: Create log directories
+  file:
+    path: "{{ www_root }}/{{ item.value.host }}/log"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: 0755
+  with_dict: "{{ sites }}"
+
+- name: Ensure sites have an index.html page
+  template:
+    src: index.html.j2
+    dest: "{{ www_root }}/{{ item.value.host }}/html/index.html"
+    owner: "{{ www_user }}"
+    group: "{{ www_group }}"
+    force: no
+  with_dict: "{{ sites }}"
+  when: >
+    item.value.wordpress is undefined or
+    (item.value.wordpress is defined and not item.value.wordpress.install)
+
+- name: Ensure sites have an info.php page
+  copy:
+    content: "<?php phpinfo(); ?>\n"
+    dest: "{{ www_root }}/{{ item.value.host }}/html/info.php"
+    owner: "{{ www_user }}"
+    group: "{{ www_group }}"
+    force: no
+  with_dict: "{{ sites }}"
+
+- name: Create SSL directory
+  file:
+    path: "/etc/nginx/ssl"
+    state: directory

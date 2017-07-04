@@ -1,0 +1,32 @@
+---
+- name: Install avahi related packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items: "{{ avahi_packages }}"
+  notify: restart avahi-daemon
+
+- name: Install avahi-alias service
+  copy:
+    src: avahi-alias
+    dest: /usr/sbin/avahi-alias
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Register avahi-alias service
+  copy:
+    src: avahi-alias.upstart
+    dest: /etc/init/avahi-alias.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Create avahi-alias config directory
+  file:
+    path: /etc/avahi/alias.d
+    state: directory
+    owner: root
+    group: root
+  notify: restart avahi-alias

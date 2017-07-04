@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ item.key }}</title>
+  </head>
+  <body>
+    <h1>It works!</h1>
+    <p>
+      The virtual host site {% if item.value.ssl is defined and item.value.ssl.enabled | default(false) -%}
+        <a href="https://{{ item.key }}">https://{{ item.key }}/</a>
+      {%- else -%}
+        <a href="http://{{ item.key }}">http://{{ item.key }}/</a>
+      {%- endif %} is located in <code>{{ www_root }}/{{ item.key }}/html/</code>.<br>
+      Deploy to this server via SSH with username <code>{{ www_user }}</code> using your host machine private key.
+    </p>
+  </body>
+</html>

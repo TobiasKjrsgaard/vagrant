@@ -1,0 +1,53 @@
+# {{ ansible_managed }}
+
+##
+# You should look at the following URL's in order to grasp a solid understanding
+# of Nginx configuration files in order to fully unleash the power of Nginx.
+# http://wiki.nginx.org/Pitfalls
+# http://wiki.nginx.org/QuickStart
+# http://wiki.nginx.org/Configuration
+#
+# Generally, you will want to move this file somewhere, and start with a clean
+# file but keep this around for reference. Or just disable in sites-enabled.
+#
+# Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
+##
+
+# Default server configuration
+#
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+	root {{ www_root }}/html;
+	index index.php index.html index.htm index.nginx-debian.html;
+
+	error_log {{ www_root }}/log/error.log warn;
+	access_log {{ www_root }}/log/access.log;
+
+	# Set an invalid server name (underscore) to ensure that this server
+	# will only be used as a last resort default server
+	#
+	server_name _;
+
+	# First attempt to serve request as file, then
+	# as directory, then fall back to displaying a 404.
+	#
+	location / {
+		try_files $uri $uri/ =404;
+	}
+
+	# pass the PHP scripts to FastCGI server via Unix socket
+	#
+	location ~ \.php$ {
+		include snippets/fastcgi-php.conf;
+		fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+	}
+
+	# deny access to .htaccess files, if Apache's document root
+	# concurs with nginx's one
+	#
+	location ~ /\.ht {
+		deny all;
+	}
+}

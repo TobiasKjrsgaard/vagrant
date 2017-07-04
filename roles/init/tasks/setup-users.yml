@@ -1,0 +1,12 @@
+---
+- name: Create users
+  user:
+    name: "{{ item.name }}"
+    groups: "{{ item.groups }}"
+  with_items: init_users
+
+- name: Authorize ssh keys
+  authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+  with_items: init_users

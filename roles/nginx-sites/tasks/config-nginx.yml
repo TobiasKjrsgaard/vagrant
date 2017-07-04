@@ -1,0 +1,29 @@
+---
+- name: Create nginx site configuration files
+  template:
+    src: site.j2
+    dest: "/etc/nginx/sites-available/{{ item.value.host }}"
+  with_dict: "{{ sites }}"
+  notify: reload nginx
+
+- name: Register existing site configuration files
+  shell: ls -1 /etc/nginx/sites-enabled
+  register: sites_enabled
+  changed_when: false
+
+- name: Remove unused site configuration files
+  file:
+    path: "/etc/nginx/sites-enabled/{{ item }}"
+    state: absent
+  with_items: "{{ sites_enabled.stdout_lines }}"
+  when: >
+    item not in sites | default([]) and
+    item != "default"
+
+- name: Link nginx site configuration files
+  file:
+    src: "/etc/nginx/sites-available/{{ item.value.host }}"
+    dest: "/etc/nginx/sites-enabled/{{ item.value.host }}"
+    state: link
+  with_dict: "{{ sites }}"
+  notify: reload nginx

@@ -1,0 +1,13 @@
+# Specify where html and log directories should be located
+www_root: /var/www
+www_user: vagrant
+www_group: www-data
+
+# Specify the maximum size of file uploads and request bodies
+max_file_upload_size: 10M
+
+# Specify where WP-CLI should be downloaded from and where it should be installed
+wp_cli_url: https://raw.github.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+wp_comp_url: https://raw.github.com/wp-cli/wp-cli/master/utils/wp-completion.bash
+bin_path: /usr/bin/wp
+comp_path: /etc/bash_completion.d/

@@ -1,0 +1,16 @@
+---
+- name: start php-fpm
+  service:
+    name: php7.0-fpm
+    state: started
+    enabled: yes
+
+- name: restart php-fpm
+  service:
+    name: php7.0-fpm
+    state: restarted
+
+- name: reload php-fpm
+  service:
+    name: php7.0-fpm
+    state: reloaded

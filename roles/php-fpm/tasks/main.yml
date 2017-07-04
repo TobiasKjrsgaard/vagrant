@@ -1,0 +1,51 @@
+---
+- name: Add PHP 7.0 PPA
+  apt_repository:
+    repo: "ppa:ondrej/php"
+    update_cache: yes
+
+- name: Install PHP 7.0
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - php7.0-cli
+  - php7.0-common
+  - php7.0-curl
+  - php7.0-dev
+  - php7.0-fpm
+  - php7.0-gd
+  - php7.0-mbstring
+  - php7.0-mcrypt
+  - php7.0-mysql
+  - php7.0-opcache
+  - php7.0-xml
+  - php7.0-xmlrpc
+  - php7.0-zip
+
+- name: Configure PHP 7.0
+  lineinfile:
+    dest: /etc/php/7.0/fpm/php.ini
+    line: "{{ item.line }}"
+    regexp: "{{ item.regexp }}"
+  with_items:
+      # File upload settings
+    - line: "upload_max_filesize = {{ max_file_upload_size }}"
+      regexp: "^upload_max_filesize ?="
+    - line: "post_max_size = {{ max_file_upload_size }}"
+      regexp: "^post_max_size ?="
+      # Error reporting settings
+    - line: "error_reporting = {{ php_error_reporting }}"
+      regexp: "^error_reporting ?="
+    - line: "display_errors = {{ php_display_errors }}"
+      regexp: "^display_errors ?="
+    - line: "log_errors = {{ php_log_errors }}"
+      regexp: "^log_errors ?="
+  notify: reload php-fpm
+
+- name: Disable default PHP-FPM pool
+  command: mv /etc/php/7.0/fpm/pool.d/www.conf /etc/php/7.0/fpm/pool.d/www.disabled
+  args:
+    creates: /etc/php/7.0/fpm/pool.d/www.disabled
+  when: disable_default_pool
+  notify: reload php-fpm

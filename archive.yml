@@ -1,0 +1,36 @@
+---
+- name: Backup database and web folders
+  hosts: lemp, lamp
+  tasks:
+  - name: Get a list of all databases
+    shell: "mysqlshow --user={{ mysql_root_user | default('root') }} --password={{ mysql_root_password | default('pass') }} | awk '{print $2}' | awk 'NF' | egrep -v 'Databases|information_schema|performance_schema|mysql'"
+    register: current_database_names
+    changed_when: false
+    ignore_errors: true
+
+  - name: Get a temporary directory
+    shell: mktemp -d
+    register: temp_path
+    changed_when: false
+
+  - name: Dump all databases individually
+    mysql_db:
+      state: dump
+      encoding: utf8mb4
+      name: "{{ item }}"
+      target: "{{ temp_path.stdout }}/{{ item }}.sql"
+      login_user: "{{ mysql_root_user | default('root') }}"
+      login_password: "{{ mysql_root_password | default('pass') }}"
+    with_items: "{{ current_database_names.stdout_lines }}"
+
+  - name: Create a compressed tarball with database backups
+    command: "tar -zcpf /vagrant/backup/{{ ansible_date_time.date }}-db.tar.gz ."
+    args:
+      chdir: "{{ temp_path.stdout }}"
+      warn: false
+
+  - name: Create a compressed tarball with web root folder
+    command: "tar -zcpf /vagrant/backup/{{ ansible_date_time.date }}-www.tar.gz ."
+    args:
+      chdir: "{{ www_root }}"
+      warn: false

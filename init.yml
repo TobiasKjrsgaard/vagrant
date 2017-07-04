@@ -1,0 +1,13 @@
+---
+- name: Initialize Box
+  hosts: all
+  become: true
+  roles:
+    - { role: init, tags: [init] }
+
+- name: Housekeeping
+  hosts: all
+  become: true
+  roles:
+    - { role: common, tags: [housekeeping] }
+    - { role: hhighlighter, tags: [housekeeping,hhighlighter] }

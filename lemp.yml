@@ -1,0 +1,13 @@
+---
+- name: NGiNX, PHP-FPM & MariaDB
+  hosts: lemp
+  become: yes
+  roles:
+    - { role: avahi, tags: [avahi], when: avahi_enabled | default(false) }
+    - { role: mailhog, tags: [mailhog], when: mailhog_enabled | default(false) }
+    - { role: mariadb, tags: [db] }
+    - { role: php-fpm, tags: [php] }
+    - { role: xdebug, tags: [xdebug] }
+    - { role: composer, tags: [composer] }
+    - { role: nginx, tags: [nginx] }
+    - { role: nginx-sites, tags: [nginx,sites] }
