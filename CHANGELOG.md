@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.0.0 (14 July 2017)
+* Remove unused and unmaintained Apache related roles
+* Upgrade base box to Bento's Ubuntu 16.04 LTS release
+* Use the new Ansible `timezone` module to configure time
+* Install MariaDB from the official Ubuntu apt repository
+
 ## 4.4.0 (4 July 2017)
 * Remove links to private PRs and Issues from `CHANGELOG.md`
 * Update comments in `Vagrantfile` to match the latest version
