@@ -12,17 +12,17 @@ disable_default_pool: true
 # in the format shown below. Add as many as you want.
 #
 sites:
- sample:
-   name: Example Development Site
-   host: vagrant.local
-   ssl:
-     enabled: true
-   database:
-     name: example_db
-     user: example_db_user
-     password: example_db_password
-   wordpress:
-     install: true
-   production:
-     host: example.com
-     try_assets: true
+  sample:
+    name: Example Development Site
+    host: vagrant.local
+    ssl:
+      enabled: true
+    database:
+      name: example_db
+      user: example_db_user
+      password: example_db_password
+    wordpress:
+      install: true
+    production:
+      host: example.com
+      try_assets: true
