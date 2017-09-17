@@ -31,4 +31,4 @@ www_user: vagrant
 www_group: www-data
 
 # Specify the maximum size of file uploads and request bodies
-max_file_upload_size: 25MB
+max_file_upload_size: 25M
