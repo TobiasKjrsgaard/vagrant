@@ -1,31 +1,31 @@
 ---
-- name: Add PHP 7.0 PPA
+- name: Add Ondrej's PHP PPA Repository
   apt_repository:
     repo: "ppa:ondrej/php"
     update_cache: yes
 
-- name: Install PHP 7.0
+- name: Install PHP 7.1
   apt:
     name: "{{ item }}"
     state: present
   with_items:
-  - php7.0-cli
-  - php7.0-common
-  - php7.0-curl
-  - php7.0-dev
-  - php7.0-fpm
-  - php7.0-gd
-  - php7.0-mbstring
-  - php7.0-mcrypt
-  - php7.0-mysql
-  - php7.0-opcache
-  - php7.0-xml
-  - php7.0-xmlrpc
-  - php7.0-zip
+  - php7.1-cli
+  - php7.1-common
+  - php7.1-curl
+  - php7.1-dev
+  - php7.1-fpm
+  - php7.1-gd
+  - php7.1-mbstring
+  - php7.1-mcrypt
+  - php7.1-mysql
+  - php7.1-opcache
+  - php7.1-xml
+  - php7.1-xmlrpc
+  - php7.1-zip
 
-- name: Configure PHP 7.0
+- name: Configure PHP 7.1
   lineinfile:
-    dest: /etc/php/7.0/fpm/php.ini
+    dest: /etc/php/7.1/fpm/php.ini
     line: "{{ item.line }}"
     regexp: "{{ item.regexp }}"
   with_items:
@@ -44,8 +44,8 @@
   notify: reload php-fpm
 
 - name: Disable default PHP-FPM pool
-  command: mv /etc/php/7.0/fpm/pool.d/www.conf /etc/php/7.0/fpm/pool.d/www.disabled
+  command: mv /etc/php/7.1/fpm/pool.d/www.conf /etc/php/7.1/fpm/pool.d/www.disabled
   args:
-    creates: /etc/php/7.0/fpm/pool.d/www.disabled
+    creates: /etc/php/7.1/fpm/pool.d/www.disabled
   when: disable_default_pool
   notify: reload php-fpm

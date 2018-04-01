@@ -18,7 +18,7 @@
 
 - name: Link PHP-FPM error log
   file:
-    src:  '/var/log/php7.0-fpm.log'
+    src:  '/var/log/php7.1-fpm.log'
     dest: '{{ www_root }}/log/php.log'
     state: link
     force: yes
