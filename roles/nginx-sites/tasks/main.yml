@@ -1,8 +1,8 @@
 ---
-- include: create-directories.yml
-- include: create-certs.yml
-- include: create-databases.yml
-- include: config-avahi.yml
-- include: config-nginx.yml
-- include: config-php.yml
-- include: install-wordpress.yml
+- import_tasks: create-directories.yml
+- import_tasks: create-certs.yml
+- import_tasks: create-databases.yml
+- import_tasks: config-avahi.yml
+- import_tasks: config-nginx.yml
+- import_tasks: config-php.yml
+- import_tasks: install-wordpress.yml

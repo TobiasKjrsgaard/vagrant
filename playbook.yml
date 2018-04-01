@@ -1,3 +1,3 @@
 ---
-- include: init.yml
-- include: lemp.yml
+- import_playbook: init.yml
+- import_playbook: lemp.yml

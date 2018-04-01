@@ -1,4 +1,4 @@
 ---
-- include: install.yml
-- include: create-databases.yml
-- include: create-users.yml
+- import_tasks: install.yml
+- import_tasks: create-databases.yml
+- import_tasks: create-users.yml

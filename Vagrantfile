@@ -74,6 +74,8 @@ Vagrant.configure("2") do |config|
     # ansible.verbose = "v"
     # assign ansible playbook written in YAML-format
     ansible.playbook = 'playbook.yml'
+    # set ansible compatibility to 2.x releases
+    ansible.compatibility_mode = "2.0"
 
     # assign Ansible roles to defined machines
     ansible.groups = {
