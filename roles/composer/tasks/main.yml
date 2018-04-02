@@ -5,7 +5,7 @@
     dest: /usr/local/bin/composer
     mode: 0755
 
-- name: Composer self update
+- name: Composer self-update
   command: composer self-update
   register: composer_self_update
-  changed_when: composer_self_update | success and 'Updating to version' in composer_self_update.stdout
+  changed_when: "'Updating to version' in composer_self_update.stdout"
