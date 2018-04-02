@@ -1,5 +1,8 @@
 # Changelog
 
+## 5.1.1 (2 April 2018)
+* Avoid using jinja tests as filters deprecated in Ansible 2.5
+
 ## 5.1.0 (2 April 2018)
 * Fix PHP config for max file size and max request size
 * Add explicit use of dynamic import rules for Ansible 2.x
