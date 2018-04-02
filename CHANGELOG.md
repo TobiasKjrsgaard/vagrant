@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.1.0 (2 April 2018)
+* Fix PHP config for max file size and max request size
+* Add explicit use of dynamic import rules for Ansible 2.x
+* Upgrade to PHP 7.1 from Ondřej's PPA Repository
+
 ## 5.0.0 (14 July 2017)
 * Remove unused and unmaintained Apache related roles
 * Upgrade base box to Bento's Ubuntu 16.04 LTS release
