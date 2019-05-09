@@ -3,6 +3,8 @@ Ansible role that does a basic setup of new machines to ensure a proper environm
 
 
 ## Tasks
+* Update information on available packages in the apt cache
+* Install commonly used apt software packages (see list below)
 * Set machine hostname to `hostname` variable if defined
 * Set current timezone to `init_timezone` variable if defined
 * Generate locales listed in the `init_locales` variable
@@ -11,7 +13,15 @@ Ansible role that does a basic setup of new machines to ensure a proper environm
 
 
 ## Installed Packages
-* ntp
+- ntp
+- build-essential
+- git
+- curl
+- rsync
+- ruby
+- dbus
+- libnss-myhostname
+- rmate
 
 
 ## Default Configuration

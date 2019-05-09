@@ -6,9 +6,6 @@
     update_cache: yes
   with_items:
   - build-essential
-  - python-software-properties
-  - python-mysqldb
-  - python-pycurl
   - git
   - curl
   - rsync
