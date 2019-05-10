@@ -1,12 +1,20 @@
 # MariaDB Database Server Role
-Ansible role that installs and configures the latest version of [MariaDB](https://mariadb.org) MySQL database server from DigitalOcean's mirror server in The Netherlands.
+Ansible role that installs and configures [MariaDB](https://mariadb.org) database server.
 
 ## Tasks
-* Install `mariadb-server` apt package
+* Install MariaDB packages with `apt`
 * Set MySQL server root user password
 * Delete anonymous database user and test table
 * Create databases defined in `mysql_databases` var
 * Create users defined in `mysql_users` var
+
+
+## Installed packages
+- mariadb-client
+- mariadb-server
+- python3-pymysql
+- python3-mysqldb
+
 
 ## Database and User creation syntax
 ```yaml

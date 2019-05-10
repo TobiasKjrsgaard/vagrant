@@ -1,7 +1,7 @@
 ---
 - name: Install MariaDB MySQL server
   apt:
-    name: mariadb-server
+    name: ['mariadb-client', 'mariadb-server', 'python3-pymysql', 'python3-mysqldb']
     state: present
 
 - name: Disable MariaDB binary logging
@@ -13,7 +13,7 @@
       skip-log-bin
     owner: root
     group: root
-  notify: reload mariadb
+  notify: restart mariadb
 
 - name: Set root user password
   mysql_user:
@@ -23,9 +23,10 @@
     check_implicit_admin: yes
     login_user: "{{ mysql_root_user }}"
     login_password: "{{ mysql_root_password }}"
+    login_unix_socket: "{{ mysql_socket | default('/var/run/mysqld/mysqld.sock') }}"
     state: present
   with_items:
-    - "{{ ansible_fqdn }}"
+    - "{{ ansible_hostname }}"
     - 127.0.0.1
     - ::1
     - localhost
@@ -36,6 +37,7 @@
     host: "{{ item }}"
     login_user: "{{ mysql_root_user }}"
     login_password: "{{ mysql_root_password }}"
+    login_unix_socket: "{{ mysql_socket | default('/var/run/mysqld/mysqld.sock') }}"
     state: absent
   with_items:
     - localhost
@@ -48,3 +50,4 @@
     state: absent
     login_user: "{{ mysql_root_user }}"
     login_password: "{{ mysql_root_password }}"
+    login_unix_socket: "{{ mysql_socket | default('/var/run/mysqld/mysqld.sock') }}"

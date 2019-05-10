@@ -6,7 +6,7 @@
     ansible_python_interpreter: python3
   tasks:
   - name: Get a list of all databases
-    shell: "mysqlshow --user={{ mysql_root_user | default('root') }} --password={{ mysql_root_password | default('pass') }} | awk '{print $2}' | awk 'NF' | egrep -v 'Databases|information_schema|performance_schema|mysql'"
+    shell: "mysqlshow --user={{ mysql_root_user | default('root') }} --password={{ mysql_root_password | default('pass') }} --socket={{ mysql_socket | default('/var/run/mysqld/mysqld.sock') }} | awk '{print $2}' | awk 'NF' | egrep -v 'Databases|information_schema|performance_schema|mysql'"
     register: current_database_names
     changed_when: false
     ignore_errors: true
@@ -24,6 +24,7 @@
       target: "{{ temp_path.stdout }}/{{ item }}.sql"
       login_user: "{{ mysql_root_user | default('root') }}"
       login_password: "{{ mysql_root_password | default('pass') }}"
+      login_unix_socket: "{{ mysql_socket | default('/var/run/mysqld/mysqld.sock') }}"
     with_items: "{{ current_database_names.stdout_lines }}"
 
   - name: Create a compressed tarball with database backups

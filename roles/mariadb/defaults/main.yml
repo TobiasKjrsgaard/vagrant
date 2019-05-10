@@ -1,14 +1,12 @@
-# Mirror configuration for apt-get
-keyserver_fingerprint: "0xcbcb082a1bb943db"
-mirror: ams2.mirrors.digitalocean.com
-version: "10.0"
-
 # Disable binary logging
 mysql_disable_bin_log: true
 
 # Default password for root user
 mysql_root_user: 'root'
 mysql_root_password: 'pass'
+
+# Default path to Unix socket used for localhost connections
+mysql_socket: '/var/run/mysqld/mysqld.sock'
 
 # List of databases to be created
 mysql_databases: []

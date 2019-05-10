@@ -7,6 +7,7 @@
     state: present
     login_user: "{{ mysql_root_user | default('root') }}"
     login_password: "{{ mysql_root_password | default('pass') }}"
+    login_unix_socket: "{{ mysql_socket | default('/var/run/mysqld/mysqld.sock') }}"
   with_dict: "{{ sites }}"
   when: item.value.database.name is defined
 
@@ -17,6 +18,7 @@
     priv: "{{ item.value.database.name }}.*:ALL"
     login_user: "{{ mysql_root_user | default('root') }}"
     login_password: "{{ mysql_root_password | default('pass') }}"
+    login_unix_socket: "{{ mysql_socket | default('/var/run/mysqld/mysqld.sock') }}"
     append_privs: yes
   with_dict: "{{ sites }}"
   when: >
