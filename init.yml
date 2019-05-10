@@ -2,11 +2,15 @@
 - name: Initialize Box
   hosts: all
   become: true
+  vars:
+    ansible_python_interpreter: python3
   roles:
     - { role: init, tags: [init] }
 
 - name: Install hhighlighter
   hosts: all
   become: true
+  vars:
+    ansible_python_interpreter: python3
   roles:
     - { role: hhighlighter, tags: [hhighlighter] }

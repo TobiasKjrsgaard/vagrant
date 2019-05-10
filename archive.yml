@@ -1,6 +1,9 @@
 ---
 - name: Backup database and web folders
   hosts: lemp, lamp
+  become: yes
+  vars:
+    ansible_python_interpreter: python3
   tasks:
   - name: Get a list of all databases
     shell: "mysqlshow --user={{ mysql_root_user | default('root') }} --password={{ mysql_root_password | default('pass') }} | awk '{print $2}' | awk 'NF' | egrep -v 'Databases|information_schema|performance_schema|mysql'"

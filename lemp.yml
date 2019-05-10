@@ -2,6 +2,8 @@
 - name: NGiNX, PHP-FPM & MariaDB
   hosts: lemp
   become: yes
+  vars:
+    ansible_python_interpreter: python3
   roles:
     - { role: avahi, tags: [avahi], when: avahi_enabled | default(false) }
     - { role: mailhog, tags: [mailhog], when: mailhog_enabled | default(false) }
