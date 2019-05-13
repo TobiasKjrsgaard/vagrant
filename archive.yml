@@ -27,6 +27,11 @@
       login_unix_socket: "{{ mysql_socket | default('/var/run/mysqld/mysqld.sock') }}"
     with_items: "{{ current_database_names.stdout_lines }}"
 
+  - name: Ensure that backup target directory exists
+    file:
+      path: /vagrant/backup
+      state: directory
+
   - name: Create a compressed tarball with database backups
     command: "tar -zcpf /vagrant/backup/{{ ansible_date_time.date }}-db.tar.gz ."
     args:
