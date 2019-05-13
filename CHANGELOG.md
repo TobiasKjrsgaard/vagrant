@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.2.0 (13 May 2019)
+* Merge common and init roles into one initialization role
+* Upgrade base box to Ubuntu 18.04 LTS (Bionic Beaver)
+* Ensure that Ansible uses Ubuntu's Python 3 interpreter
+* Use Unix socket when connecting to MariaDB server in playbooks
+* Ensure that SVG files are covered by `try_files` directive
+* Ensure that backup target directory exists in `archive.yml`
+
 ## 5.1.1 (2 April 2018)
 * Avoid using jinja tests as filters deprecated in Ansible 2.5
 
